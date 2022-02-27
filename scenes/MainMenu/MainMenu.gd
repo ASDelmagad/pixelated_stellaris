@@ -17,4 +17,8 @@ func _ready():
 
 
 func _on_BtnSettings_pressed():
-	$SettingsMenu.visible = true; # Replace with function body.
+	$SettingsMenu.visible = !$SettingsMenu.visible # Replace with function body.
+
+
+func _on_BtnExit_pressed():
+	get_tree().quit()

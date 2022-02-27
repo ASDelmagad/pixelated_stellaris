@@ -1,19 +1,17 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/SettingsMenu/SettingsMenu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/SettingsMenu/Resolutions.gd" type="Script" id=2]
 
 [node name="SettingsMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 1 )
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 tab_align = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Gameplay" type="Tabs" parent="TabContainer"]
 anchor_right = 1.0
@@ -24,7 +22,6 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Video Settings" type="Tabs" parent="TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -38,23 +35,33 @@ anchor_top = 0.02
 anchor_right = 0.98
 anchor_bottom = 0.99
 scroll_horizontal_enabled = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Video Settings/ScrollContainer"]
-margin_right = 124.0
-margin_bottom = 64.0
-
-[node name="CheckButton" type="CheckButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer"]
-margin_right = 124.0
+margin_right = 340.0
 margin_bottom = 40.0
-text = "sadsad"
 
-[node name="OptionButton" type="OptionButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer"]
-margin_top = 44.0
-margin_right = 124.0
-margin_bottom = 64.0
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer"]
+margin_right = 340.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_top = 13.0
+margin_right = 84.0
+margin_bottom = 27.0
+text = "  Resolution: "
+
+[node name="OptionButton" type="OptionButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 88.0
+margin_right = 182.0
+margin_bottom = 40.0
+text = "resolution"
+script = ExtResource( 2 )
+
+[node name="CheckButton" type="CheckButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 186.0
+margin_right = 340.0
+margin_bottom = 40.0
+text = " Full Screen"
 
 [node name="Sound Settings" type="Tabs" parent="TabContainer"]
 visible = false
@@ -64,3 +71,5 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+
+[connection signal="item_selected" from="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/OptionButton" to="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/OptionButton" method="_on_OptionButton_item_selected"]

@@ -9,6 +9,8 @@ signal animation_finished(node)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	self.global_scale.x = 0.03
+	self.global_scale.y = 0.03
 	pass # Replace with function body.
 
 

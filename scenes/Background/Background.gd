@@ -27,9 +27,9 @@ func _on_StarNode_animation_finished(child):
 func create_random_star():
 	var starNode: Node2D = load("scenes/Background/StarNode.tscn").instance()
 	
+	self.add_child(starNode)
 	starNode.connect("animation_finished", self, "_on_StarNode_animation_finished")
 	
-	self.add_child(starNode)
 	starNode.position = random_position(self.get_rect().size.x, self.get_rect().size.y)
 	
 func random_position(x, y):

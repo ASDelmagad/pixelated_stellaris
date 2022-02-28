@@ -3,10 +3,15 @@
 [ext_resource path="res://scenes/SettingsMenu/SettingsMenu.gd" type="Script" id=1]
 [ext_resource path="res://scenes/SettingsMenu/Resolutions.gd" type="Script" id=2]
 
-[node name="SettingsMenu" type="Control"]
+[node name="SettingsMenu" type="Control" groups=[
+"settings",
+]]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
@@ -22,6 +27,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Video Settings" type="Tabs" parent="TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -50,7 +56,9 @@ margin_right = 84.0
 margin_bottom = 27.0
 text = "  Resolution: "
 
-[node name="OptionButton" type="OptionButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer" groups=[
+"settings",
+]]
 margin_left = 88.0
 margin_right = 182.0
 margin_bottom = 40.0

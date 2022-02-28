@@ -1,10 +1,9 @@
 extends OptionButton
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var root = get_tree().get_root()
+var root = 0
 
 var resolutions = [
 	[640, 360],
@@ -23,10 +22,13 @@ var key = "Resolution"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	resolution = root.settings[section][key]
+	root = get_tree().get_nodes_in_group("settings")[0]
 	
-	for i in range(0, resolutions.count()):
-		self.add_item("{}x{}".format(resolutions[i][0], resolutions[i][1]), i)
+	resolution = root.settings[section][key]
+	print(resolution)
+	for i in range(0, resolutions.size()):
+		print(i)
+		self.add_item("{0}x{1}".format([resolutions[i][0], resolutions[i][1]]), i)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

@@ -40,3 +40,7 @@ func _on_OptionButton_item_selected(id):
 	
 	resolution = value
 	root.saveSetting(section, key, value)
+	set_resolution(value)
+
+func set_resolution(value):
+	OS.window_size = Vector2(value[0], value[1])

@@ -1,17 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/SettingsMenu/SettingsMenu.gd" type="Script" id=1]
 [ext_resource path="res://scenes/SettingsMenu/Resolutions.gd" type="Script" id=2]
+[ext_resource path="res://scenes/SettingsMenu/FullScreen.gd" type="Script" id=3]
 
-[node name="SettingsMenu" type="Control" groups=[
-"settings",
-]]
+[node name="SettingsMenu" type="Control" groups=["settings"]]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
@@ -50,26 +46,25 @@ margin_bottom = 40.0
 margin_right = 340.0
 margin_bottom = 40.0
 
-[node name="Label" type="Label" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="LabelRes" type="Label" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
 margin_top = 13.0
 margin_right = 84.0
 margin_bottom = 27.0
 text = "  Resolution: "
 
-[node name="OptionButton" type="OptionButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer" groups=[
-"settings",
-]]
+[node name="Resolutions" type="OptionButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer" groups=["settings"]]
 margin_left = 88.0
 margin_right = 182.0
 margin_bottom = 40.0
 text = "resolution"
 script = ExtResource( 2 )
 
-[node name="CheckButton" type="CheckButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="FullScreen" type="CheckButton" parent="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer" groups=["settings"]]
 margin_left = 186.0
 margin_right = 340.0
 margin_bottom = 40.0
 text = " Full Screen"
+script = ExtResource( 3 )
 
 [node name="Sound Settings" type="Tabs" parent="TabContainer"]
 visible = false
@@ -80,4 +75,6 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[connection signal="item_selected" from="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/OptionButton" to="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/OptionButton" method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/Resolutions" to="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/Resolutions" method="_on_OptionButton_item_selected"]
+[connection signal="toggled" from="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/FullScreen" to="." method="_on_CheckButton_toggled"]
+[connection signal="toggled" from="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/FullScreen" to="TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/FullScreen" method="_on_FullScreen_toggled"]

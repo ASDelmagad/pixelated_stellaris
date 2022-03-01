@@ -25,9 +25,7 @@ func _ready():
 	settingsFile.load(fileLocation)
 	
 	loadVideoSettings(settingsFile)
-	
-func _exit_tree():
-	settingsFile.save(fileLocation)
+	reloadSettings()
 
 func loadVideoSettings(fileVar: ConfigFile):
 	var section = "VideoSettings"
@@ -35,9 +33,18 @@ func loadVideoSettings(fileVar: ConfigFile):
 	for key in settings[section].keys():
 		settings[section][key] = fileVar.get_value(section, key)
 
+func reloadSettings():
+	var videoSettings: Dictionary = settings['VideoSettings']
+	var resolution: Array = videoSettings['Resolution']
+	var fullScreen = videoSettings['Fullscreen']
+	
+	OS.window_size = Vector2(resolution[0], resolution[1])
+	OS.window_fullscreen = fullScreen
+
 func saveSetting(section, key, value):
 	settings[section][key] = value
 	settingsFile.set_value(section, key, value)
+	settingsFile.save(fileLocation)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

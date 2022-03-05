@@ -14,33 +14,45 @@ var resolutions = [
 	[3200, 1800],
 	[3840, 2160]
 ]
-var resolution = [640, 360]
-
-var section = "VideoSettings"
-var key = "Resolution"
+var resolution = [1920, 1080]
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	root = get_tree().get_nodes_in_group("settings")[0]
 	
-	resolution = root.settings[section][key]
-	print(resolution)
+	resolution = root.settings["VideoSettings"]["Resolution"]
+	
 	for i in range(0, resolutions.size()):
-		print(i)
-		self.add_item("{0}x{1}".format([resolutions[i][0], resolutions[i][1]]), i)
+		var width = resolutions[i][0]
+		var height = resolutions[i][1]
+		
+		self.add_item("{0}x{1}".format([width, height]), i)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
-
 func _on_OptionButton_item_selected(id):
 	var value = [resolutions[id][0], resolutions[id][1]]
 	
 	resolution = value
-	root.saveSetting(section, key, value)
+	root.setSetting("VideoSettings", "Resolution", value)
 	set_resolution(value)
+
+func resolution_loaded(value):
+	resolution = value
+	
+	for i in range(0, resolutions.size()):
+		var width = resolutions[i][0]
+		var height = resolutions[i][1]
+		
+		if resolution[0] == width && resolution[1] == height:
+			self.selected = i
 
 func set_resolution(value):
 	OS.window_size = Vector2(value[0], value[1])
+
+
+func _on_FullScreen_toggled(button_pressed):
+	set_resolution(resolution)

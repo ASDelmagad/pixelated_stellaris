@@ -4,15 +4,13 @@ extends Control
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var fileLocation = "user://settings.cfg"
-
 var settings = {
 	"GameplaySettings":{
 		
 	},
 	"VideoSettings":{
-		"Resolution":[640, 360],
-		"FullScreen":false
+		"Resolution":[1920, 1080],
+		"FullScreen":true
 	},
 	"SoundSettings":{
 		
@@ -20,31 +18,44 @@ var settings = {
 }
 var settingsFile = ConfigFile.new()
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	settingsFile.load(fileLocation)
+	loadSettingsFile(settingsFile, "res://settings.cfg")
 	
-	loadVideoSettings(settingsFile)
-	reloadSettings()
+	applySettings()
 
-func loadVideoSettings(fileVar: ConfigFile):
-	var section = "VideoSettings"
+func _exit_tree():
+	settingsFile.save("res://settings.cfg")
+
+func loadSettingsFile(settingsVar: ConfigFile, file: String):
+	settingsVar.load(file)
 	
-	for key in settings[section].keys():
-		settings[section][key] = fileVar.get_value(section, key)
+	for section in settings.keys():
+		print(section)
+		for key in settings[section].keys():
+			print(key)
+			if !settingsVar.has_section_key(section, key):
+				settingsVar.set_value(section, key, settings[section][key])
+			else:
+				settings[section][key] = settingsVar.get_value(section, key)
+	
+	settingsVar.save(file)
 
-func reloadSettings():
+func applySettings():
 	var videoSettings: Dictionary = settings['VideoSettings']
 	var resolution: Array = videoSettings['Resolution']
-	var fullScreen = videoSettings['Fullscreen']
+	var fullScreen = videoSettings['FullScreen']
 	
 	OS.window_size = Vector2(resolution[0], resolution[1])
 	OS.window_fullscreen = fullScreen
+	
+	$"TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/Resolutions".resolution_loaded(resolution)
+	$"TabContainer/Video Settings/ScrollContainer/VBoxContainer/HBoxContainer/FullScreen".fullscreen_loaded(fullScreen)
 
-func saveSetting(section, key, value):
+func setSetting(section, key, value):
 	settings[section][key] = value
 	settingsFile.set_value(section, key, value)
-	settingsFile.save(fileLocation)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
